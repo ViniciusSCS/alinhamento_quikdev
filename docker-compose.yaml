@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  projeto-alinhamento-quikdev:
+    build:
+      context: ./
+      args:
+        DK_UID: ${DK_UID}
+        DK_GID: ${DK_GID}
+    volumes:
+      - "${PWD}:/home/node/project"
+    command: ["npm", "run", "dev"]
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      NODE_ENV: development
+      DEBUG: nodejs-docker-express:*
+    networks:
+      - projeto-alinhamento-quikdev
+
+  pm-mysql:
+    build:
+      context: ./docker/mysql
+      args:
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "${MYSQL_PORT}:3306"
+    volumes:
+      - ./docker/volumes/mysql:/var/lib/mysql
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - microset-network
+
+networks:
+  projeto-alinhamento-quikdev:
+    name: projeto-alinhamento-quikdev
+    driver: bridge
