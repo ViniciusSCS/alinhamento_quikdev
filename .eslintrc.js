@@ -4,12 +4,14 @@ module.exports = {
     commonjs: true,
     es2021: true,
     node: true,
+    jest: true,
     "jest/globals": true,
   },
   extends: ["eslint:recommended", "prettier", "plugin:jest/recommended"],
   parserOptions: {
     ecmaVersion: "latest",
   },
+  ignorePatterns: ["test/**"],
   plugins: ["prettier", "jest"],
   rules: {
     "prettier/prettier": "error",
