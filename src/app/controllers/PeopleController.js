@@ -1,41 +1,38 @@
+const { ValidationError } = require("yup");
+const { sendBadRequest, sendInternalServerError } = require("../errors");
+const PeopleService = require("../services/PeopleService");
+const { validarCadastro } = require("../validators/PeopleValidator");
 const models = require("../models/index");
-const yup = require("yup");
 
 class PeopleController {
+  peopleService;
+
+  constructor(peopleRepository) {
+    this.peopleService = new PeopleService(peopleRepository);
+  }
+
   async store(req, res) {
-    const validaCampos = yup.object().shape({
-      cpf: yup
-        .string("Erro: Necessário preencher o campo CPF")
-        .required("Erro: Necessário preencher o campo CPF")
-        .length(11, "Erro: Necessário preencher o campo com um CPF válido"),
-      name: yup
-        .string("Erro: Necessário preencher o campo nome")
-        .required("Erro: Necessário preencher o campo nome"),
-    });
-
     try {
-      const body = req.body;
+      const { body } = req;
 
-      await validaCampos.validate(body, { abortEarly: false });
-      console.log(body);
-      await models.people.create(body);
+      const validateBody = await validarCadastro(body);
+
+      const payload = await this.peopleService.cadastrar(validateBody);
+
+      if (!payload) {
+        return sendBadRequest(req, res, "Não foi possível cadastrar");
+      }
 
       return res.status(200).json({
-        data: body,
+        data: payload,
         mensagem: "Pessoa adicionada ao banco de dados com Sucesso!!",
       });
     } catch (e) {
-      if (e instanceof yup.ValidationError) {
-        return res.status(401).json({
-          validaCampos: e.inner.responseErrors(),
-          message: "ERRO: Usuário não cadastrado!!",
-        });
-      } else {
-        return res.status(401).json({
-          validaCampos: e.errors,
-          message: "ERRO: Usuário não cadastrado!!",
-        });
+      if (e instanceof ValidationError) {
+        return sendBadRequest(req, res, e.inner.responseErrors());
       }
+
+      sendInternalServerError(req, res, e?.message, e);
     }
   }
 
@@ -46,21 +43,11 @@ class PeopleController {
   }
 
   async update(req, res) {
-    const validaCampos = yup.object().shape({
-      cpf: yup
-        .string("Erro: Necessário preencher o campo CPF")
-        .required("Erro: Necessário preencher o campo CPF")
-        .length(11, "Erro: Necessário preencher o campo com um CPF válido"),
-      name: yup
-        .string("Erro: Necessário preencher o campo nome")
-        .required("Erro: Necessário preencher o campo nome"),
-    });
-
     try {
       const id = req.params.id;
       const body = req.body;
 
-      await validaCampos.validate(body, { abortEarly: false });
+      await validarCadastro(body);
 
       const peopleExists = await models.people.findOne({ where: { id: id } });
 
@@ -74,7 +61,7 @@ class PeopleController {
         mensagem: "Pessoa atualizada com sucesso",
       });
     } catch (e) {
-      if (e instanceof yup.ValidationError) {
+      if (e instanceof ValidationError) {
         return res.status(401).json({
           validaCampos: e.inner.responseErrors(),
           message: "ERRO: Pessoa não atualizada!!",
@@ -107,4 +94,4 @@ class PeopleController {
   }
 }
 
-module.exports = new PeopleController();
+module.exports = PeopleController;

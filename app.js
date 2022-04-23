@@ -1,6 +1,7 @@
 require("dotenv").config();
 require("./src/database/mysql");
 require("./src/helpers/prototype");
+const cors = require("cors");
 
 const express = require("express");
 const cookieParser = require("cookie-parser");
@@ -13,6 +14,7 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(cors());
 
 app.use("/people", peopleRouter);
 
