@@ -23,6 +23,10 @@ class PeopleController {
         return sendBadRequest(req, res, "Não foi possível cadastrar");
       }
 
+      const people = Object.assign({}, body);
+      delete people.senha;
+      delete people.confirmacaoSenha;
+
       return res.status(200).json({
         data: payload,
         mensagem: "Pessoa adicionada ao banco de dados com Sucesso!!",
@@ -37,9 +41,12 @@ class PeopleController {
   }
 
   async index(req, res) {
-    const people = await models.people.findAll();
+    const body = await models.people.findAll();
 
-    return res.status(200).json({ data: people });
+    const people = Object.assign({}, body.to);
+    delete people.senha;
+
+    return res.status(200).json({ data: body });
   }
 
   async update(req, res) {
