@@ -17,7 +17,7 @@ services:
     networks:
       - projeto-alinhamento-quikdev
 
-  pm-mysql:
+  mysql:
     build:
       context: ./docker/mysql
       args:
@@ -31,7 +31,7 @@ services:
       - ./docker/volumes/mysql:/var/lib/mysql
       - /etc/localtime:/etc/localtime:ro
     networks:
-      - microset-network
+      - projeto-alinhamento-quikdev
 
 networks:
   projeto-alinhamento-quikdev:
