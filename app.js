@@ -5,10 +5,6 @@ require("./src/helpers/prototype");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-// const mongoose = require('./src/database/mongoose')
-
-// mongoose()
-
 const peopleRouter = require("./routes/people");
 
 const app = express();
