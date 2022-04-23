@@ -1,7 +1,14 @@
 const { ValidationError } = require("yup");
-const { sendBadRequest, sendInternalServerError } = require("../errors");
+const {
+  sendBadRequest,
+  sendInternalServerError,
+  sendNotFoundError,
+} = require("../errors");
 const PeopleService = require("../services/PeopleService");
-const { validarCadastro } = require("../validators/PeopleValidator");
+const {
+  validarCadastro,
+  validarLogin,
+} = require("../validators/PeopleValidator");
 const models = require("../models/index");
 
 class PeopleController {
@@ -9,6 +16,46 @@ class PeopleController {
 
   constructor(peopleRepository) {
     this.peopleService = new PeopleService(peopleRepository);
+  }
+
+  async me(req, res) {
+    try {
+      const { userId } = req;
+      const payload = await this.peopleService.me(userId);
+
+      if (!payload)
+        return sendNotFoundError(req, res, `Usuário ${userId} não encontrado`);
+
+      return res.json({
+        data: payload,
+        message: "Usuário encontrado",
+      });
+    } catch (error) {
+      sendInternalServerError(req, res, error?.message, error);
+    }
+  }
+
+  async login(req, res) {
+    try {
+      const { body } = req;
+
+      const validatedBody = await validarLogin(body);
+
+      const payload = await this.peopleService.login(validatedBody);
+
+      if (!payload) return sendBadRequest(req, res, "Não foi possível logar");
+
+      return res.json({
+        data: payload,
+        message: "Usuário logado com sucesso!",
+      });
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        return sendBadRequest(req, res, error.inner.responseErrors());
+      }
+
+      sendInternalServerError(req, res, error?.message, error);
+    }
   }
 
   async store(req, res) {
@@ -22,10 +69,6 @@ class PeopleController {
       if (!payload) {
         return sendBadRequest(req, res, "Não foi possível cadastrar");
       }
-
-      const people = Object.assign({}, body);
-      delete people.senha;
-      delete people.confirmacaoSenha;
 
       return res.status(200).json({
         data: payload,
@@ -41,30 +84,24 @@ class PeopleController {
   }
 
   async index(req, res) {
-    const body = await models.people.findAll();
-
-    const people = Object.assign({}, body.to);
-    delete people.senha;
+    const body = await this.peopleService.findAll();
 
     return res.status(200).json({ data: body });
   }
 
   async update(req, res) {
     try {
-      const id = req.params.id;
-      const body = req.body;
+      const { body, userId } = req;
 
-      await validarCadastro(body);
+      const validateBody = await validarCadastro(body);
 
-      const peopleExists = await models.people.findOne({ where: { id: id } });
+      const payload = await this.peopleService.atualizar(userId, validateBody);
 
-      if (!peopleExists) {
-        return res.status(404).json({ msg: "Pessoa não encontrada", data: {} });
+      if (!payload) {
+        return sendBadRequest(req, res, "Não foi possível cadastrar");
       }
-      await models.people.update(body, { where: { id: id } });
-      const peopleUpdate = await models.people.findOne({ where: { id: id } });
       return res.status(200).json({
-        data: peopleUpdate,
+        data: payload,
         mensagem: "Pessoa atualizada com sucesso",
       });
     } catch (e) {

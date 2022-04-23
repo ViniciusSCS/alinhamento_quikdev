@@ -5,7 +5,11 @@ describe("Cadastro de Pessoa", () => {
     test("Deve cadastrar uma pessoa com sucesso", () => {
         let people = {
             name: 'Teste Testando',
-            cpf: '12345678910'
+            email: 'teste.testando@jest.test',
+            usuario: 'teste.testando',
+            cpf: '12345678910',
+            senha: '12@45A78b',
+            confirmacaoSenha: '12@45A78b'
         }
 
         return request.post("/people/")
