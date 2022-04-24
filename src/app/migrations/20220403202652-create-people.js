@@ -12,21 +12,28 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      cpf: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       email: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      usuario: {
+      username: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      senha: {
+      password: {
         type: Sequelize.STRING,
         allowNull: false,
+      },
+      profileId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        default: Sequelize.INTEGER,
+        references: {
+          model: "profiles",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       createdAt: {
         allowNull: false,

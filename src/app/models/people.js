@@ -2,15 +2,17 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class People extends Model {
-    static associate() {}
+    static associate(models) {
+      People.belongsTo(models.profile);
+    }
   }
   People.init(
     {
       name: DataTypes.STRING,
-      cpf: DataTypes.STRING,
       email: DataTypes.STRING,
-      usuario: DataTypes.STRING,
-      senha: DataTypes.STRING,
+      username: DataTypes.STRING,
+      password: DataTypes.STRING,
+      profileId: DataTypes.INTEGER,
     },
     {
       sequelize,

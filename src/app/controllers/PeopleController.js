@@ -26,7 +26,7 @@ class PeopleController {
       if (!payload)
         return sendNotFoundError(req, res, `Usuário ${userId} não encontrado`);
 
-      return res.json({
+      return res.status(200).json({
         data: payload,
         message: "Usuário encontrado",
       });

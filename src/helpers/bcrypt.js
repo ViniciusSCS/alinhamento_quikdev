@@ -1,10 +1,10 @@
 const { hash, genSaltSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 
-const salt = genSaltSync(10);
+const salt = genSaltSync(parseInt(process.env.SALT));
 
-const encrypt = (senha) => {
-  return hash(senha, salt);
+const encrypt = (password) => {
+  return hash(password, salt);
 };
 
 const gerarTokenAccess = (body) => {
@@ -16,7 +16,13 @@ const gerarTokenAccess = (body) => {
   const dia = secret.getDate() != 9 ? secret.getDate() : "0" + secret.getDate();
   const uuid =
     secret.getFullYear() + mes + dia + Math.floor(1000 + Math.random() * 9000);
-  const tokenAccess = sign({ userId: body.id }, uuid, { expiresIn: 300 });
+  const tokenAccess = sign(
+    { userId: body.id, profileId: body.profileId },
+    uuid,
+    { expiresIn: 300 }
+  );
+
+  console.log(tokenAccess);
 
   return tokenAccess;
 };
