@@ -11,9 +11,16 @@ class ProfileController {
   }
 
   async index(req, res) {
-    const body = await this.profileService.findAll();
+    if (req.profileId == 1) {
+      const body = await this.profileService.findAll();
 
-    return res.status(200).json({ data: body });
+      return res.status(200).json({ data: body });
+    } else {
+      return res.status(200).json({
+        message:
+          "ALERT: Usuário NÃO possui permissão para visualizar perfis cadastrados!!!",
+      });
+    }
   }
 
   async store(req, res) {
