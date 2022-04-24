@@ -13,5 +13,6 @@ router.delete("/:id", controller.delete.bind(controller));
 
 router.get("/me", authMiddleware, controller.me.bind(controller));
 router.put("/:id", authMiddleware, controller.update.bind(controller));
+router.delete("/:id", authMiddleware, controller.delete.bind(controller));
 
 module.exports = router;
