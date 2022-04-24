@@ -18,7 +18,7 @@ class ProfileController {
     } else {
       return res.status(200).json({
         message:
-          "ALERT: Usuário NÃO possui permissão para visualizar perfis cadastrados!!",
+          "ALERT: Usuário NÃO possui permissão para visualizar perfis cadastrados!!!",
       });
     }
   }
