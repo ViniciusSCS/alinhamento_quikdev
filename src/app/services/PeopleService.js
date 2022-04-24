@@ -9,9 +9,15 @@ class PeopleService {
   }
 
   async findAll() {
-    return await this.peopleRepository.findAll({
+    const peopleFound = await this.peopleRepository.findAll({
       include: [{ model: models.profile }],
     });
+
+    const people = Object.assign(peopleFound);
+    console.log(people);
+    delete people.password;
+
+    return { people };
   }
 
   async cadastrar(people) {

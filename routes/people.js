@@ -6,11 +6,11 @@ const models = require("../src/app/models/");
 
 const controller = new PeopleController(models.people);
 
-router.get("/", controller.index.bind(controller));
 router.post("/", controller.store.bind(controller));
 router.post("/login", controller.login.bind(controller));
 router.delete("/:id", controller.delete.bind(controller));
 
+router.get("/", authMiddleware, controller.index.bind(controller));
 router.get("/me", authMiddleware, controller.me.bind(controller));
 router.put("/:id", authMiddleware, controller.update.bind(controller));
 router.delete("/:id", authMiddleware, controller.delete.bind(controller));
