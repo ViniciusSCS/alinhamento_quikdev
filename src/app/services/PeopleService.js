@@ -20,7 +20,17 @@ class PeopleService {
     return { people };
   }
 
+  async findOne(query) {
+    return this.peopleRepository.findOne(query);
+  }
+
   async cadastrar(people) {
+    const peopleExist = await this.findOne({ where: { email: people.email } });
+
+    if (peopleExist) {
+      throw new Error("Pessoa já cadastrada na Base de Dados!");
+    }
+
     const passwordKey = await encrypt(people.password);
     people.password = passwordKey;
 
