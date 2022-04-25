@@ -6,19 +6,19 @@ describe("Cadastro de Pessoa", () => {
         let people = {
             name: 'Teste Testando',
             email: 'teste.testando@jest.test',
-            usuario: 'teste.testando',
-            cpf: '12345678910',
-            senha: '12@45A78b',
-            confirmacaoSenha: '12@45A78b'
+            usarname: 'teste.testando',
+            password: '12@45A78b',
+            passwordConfirmation: '12@45A78b',
+            perfilId: 2
         }
 
         return request.post("/people/")
-        .send(people)
-        .then(res => {
-            expect(res.body)
-            expect(res.statusCode).toEqual(200)
-        }).catch(e => {
-            fail(e)
-        })
+            .send(people)
+            .then(res => {
+                expect(res.body)
+                expect(res.statusCode).toEqual(200)
+            }).catch(e => {
+                fail(e)
+            })
     })
 })
