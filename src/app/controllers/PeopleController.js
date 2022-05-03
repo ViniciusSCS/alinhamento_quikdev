@@ -7,6 +7,7 @@ const {
 const PeopleService = require("../services/PeopleService");
 const {
   validarCadastro,
+  validatePassword,
   validarLogin,
 } = require("../validators/PeopleValidator");
 const models = require("../models/index");
@@ -141,6 +142,34 @@ class PeopleController {
       }
     } catch (error) {
       return res.status(400).json({ msg: "Bad request" });
+    }
+  }
+
+  async forgotPassword() {}
+
+  async updatePassword(req, res) {
+    try {
+      const id = req.params.id;
+      const { body } = req;
+
+      const validate = await validatePassword(body);
+
+      const payload = await this.peopleService.updatePassword(id, validate);
+
+      if (!payload) {
+        return sendBadRequest(req, res, "Não foi possível atualizar senha");
+      }
+
+      return res.json({
+        data: payload,
+        message: "Senha atualizada com sucesso!",
+      });
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        return sendBadRequest(req, res, error.inner.responseErrors());
+      }
+
+      sendInternalServerError(req, res, error?.message, error);
     }
   }
 }

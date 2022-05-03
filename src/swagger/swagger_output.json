@@ -1,0 +1,290 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Projeto Alinhamento",
+    "description": "",
+    "contact": {
+      "name": "Vinícius Sarmento Costa Siqueira",
+      "email": "vinicius.eng.comp92@gmail.com"
+    }
+  },
+  "host": "localhost:8005",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/people/": {
+      "post": {
+        "summary": "Cadastra nova Pessoa",
+        "description": "Cadastra nova Pessoa",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "email",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "username",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "password",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "passwordConfirmation",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "profileId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/People"
+            }
+          },
+          "404": {
+            "description": "People not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "summary": "Lista Pessoas cadastradas",
+        "description": "Lista Pessoas cadastradas",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/People"
+            }
+          },
+          "404": {
+            "description": "People not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/people/login": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "password",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/People"
+            }
+          },
+          "404": {
+            "description": "People not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/people/{id}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/people/me": {
+      "get": {
+        "description": "Lista Pessoa logada no sistema",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/people/atualizar_senha/{id}": {
+      "put": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/profile/": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Profile"
+            }
+          },
+          "404": {
+            "description": "People not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Profile"
+            }
+          },
+          "404": {
+            "description": "People not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "People": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "profileId": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "User"
+      }
+    },
+    "Profile": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

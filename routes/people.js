@@ -8,11 +8,15 @@ const controller = new PeopleController(models.people);
 
 router.post("/", controller.store.bind(controller));
 router.post("/login", controller.login.bind(controller));
+router.post("/enviar_email");
 router.delete("/:id", controller.delete.bind(controller));
 
-router.get("/", authMiddleware, controller.index.bind(controller));
 router.get("/me", authMiddleware, controller.me.bind(controller));
+router.get("/", authMiddleware, controller.index.bind(controller));
+
+router.put("/atualizar_senha/:id", controller.updatePassword.bind(controller));
 router.put("/:id", authMiddleware, controller.update.bind(controller));
+
 router.delete("/:id", authMiddleware, controller.delete.bind(controller));
 
 module.exports = router;

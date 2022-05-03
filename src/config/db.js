@@ -7,7 +7,7 @@ module.exports = {
   database: connection.MYSQL_DATABASE,
   host: connection.MYSQL_HOST,
   port: connection.MYSQL_PORT,
-  dialect: connection.MYSQL_DIALECT,
+  dialect: connection.DB_DIALECT,
   define: {
     timestamps: true,
   },

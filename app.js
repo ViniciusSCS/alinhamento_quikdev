@@ -1,6 +1,8 @@
 require("dotenv").config();
 require("./src/database/mysql");
 require("./src/helpers/prototype");
+const swaggerUi = require("swagger-ui-express");
+const swaggerFile = require("./src/swagger/swagger_output.json");
 const cors = require("cors");
 
 const express = require("express");
@@ -11,6 +13,7 @@ const profileRouter = require("./routes/profile");
 
 const app = express();
 
+app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

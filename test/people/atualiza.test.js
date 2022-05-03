@@ -9,7 +9,7 @@ describe("Pessoa", () => {
             usarname: 'teste.testando',
             password: '12@45A78b',
             passwordConfirmation: '12@45A78b',
-            perfilId: 2
+            profileId: 2
         }
 
         return request.put("/people/2")

@@ -117,6 +117,28 @@ class PeopleService {
 
     return { people, token };
   }
+
+  async updatePassword(id, people) {
+    const peopleExists = await this.peopleRepository.findOne({
+      where: { id: id },
+    });
+
+    if (!peopleExists) {
+      throw new Error("Pessoa não encontrada");
+    }
+
+    const passwordKey = await encrypt(people.password);
+    people.password = passwordKey;
+
+    await this.peopleRepository.update(people, {
+      where: { id: people.id },
+    });
+
+    people = Object.assign({}, people);
+    delete people.password && delete people.passwordConfirmation;
+
+    return { people };
+  }
 }
 
 module.exports = PeopleService;

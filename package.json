@@ -8,7 +8,8 @@
     "start": "nodemon ./bin/www",
     "dev": "nodemon ./bin/www",
     "lint:staged": "lint-staged",
-    "test": "jest"
+    "test": "jest",
+    "swagger-autogen": "node swagger.js"
   },
   "author": "Vinícius Sarmento Costa Siqueira <vinicius.siqueira@quikdev.com.br>",
   "license": "MIT",
@@ -40,7 +41,9 @@
     "nodemon": "^2.0.15",
     "pre-commit": "^1.2.2",
     "prettier": "^2.6.2",
-    "supertest": "^6.2.2"
+    "supertest": "^6.2.2",
+    "swagger-autogen": "^2.21.1",
+    "swagger-ui-express": "^4.3.0"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

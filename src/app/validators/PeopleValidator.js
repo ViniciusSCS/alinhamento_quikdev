@@ -54,7 +54,30 @@ const validarLogin = (body) => {
   return validaCampos.validate(body, { abortEarly: false, stripUnknown: true });
 };
 
+const validatePassword = (body) => {
+  const validatePassword = yup.object().shape({
+    password: yup
+      .string("Erro: Necessário preencher o campo senha")
+      .required("Erro: Necessário preencher o campo senha")
+      .min(8, "Senha muito curta, digite pelo menos 8 caracteres")
+      .minNumbers(1, "A senha deve conter ao menos um número")
+      .minLowercase(1, "A senha deve conter ao menos uma letra minúscula")
+      .minUppercase(1, "A senha deve conter ao menos uma letra maiúscula")
+      .minSymbols(1, "A senha deve conter ao menos um caracter especial"),
+    passwordConfirmation: yup
+      .string()
+      .required("ERRO: Confirme a senha")
+      .oneOf([yup.ref("password")], "As senhas devem corresponder"),
+  });
+
+  return validatePassword.validate(body, {
+    abortEarly: false,
+    stripUnknown: true,
+  });
+};
+
 module.exports = {
   validarCadastro,
+  validatePassword,
   validarLogin,
 };
