@@ -9,12 +9,11 @@ class PeopleService {
   }
 
   async findAll() {
-    const peopleFound = await this.peopleRepository.findAll({
+    const peopleFound = await this.peopleRepository.findOne({
       include: [{ model: models.profile }],
     });
 
-    const people = Object.assign(peopleFound);
-    console.log(people);
+    const people = Object.assign({}, peopleFound.dataValues);
     delete people.password;
 
     return { people };
