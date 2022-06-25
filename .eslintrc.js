@@ -10,11 +10,10 @@ module.exports = {
   extends: [
     'standard',
     'eslint:recommended',
-    'prettier',
-    'plugin:jest/recommended',
+    'plugin:jest/recommended'
   ],
   parserOptions: {
-    ecmaVersion: 'latest',
+    ecmaVersion: 'latest'
   },
   ignorePatterns: ['test/**'],
   plugins: ['prettier', 'jest'],
@@ -23,6 +22,6 @@ module.exports = {
     'jest/no-focused-tests': 'error',
     'jest/no-identical-title': 'error',
     'jest/prefer-to-have-length': 'warn',
-    'jest/valid-expect': 'error',
+    'jest/valid-expect': 'error'
   }
 }

@@ -1,17 +1,17 @@
 class PeopleService {
-  constructor(profileRepository) {
-    this.profileRepository = profileRepository;
+  constructor (profileRepository) {
+    this.profileRepository = profileRepository
   }
 
-  async findAll() {
-    return await this.profileRepository.findAll();
+  async findAll () {
+    return await this.profileRepository.findAll()
   }
 
-  async store(profile) {
-    await this.profileRepository.create(profile);
+  async store (profile) {
+    await this.profileRepository.create(profile)
 
-    return { profile };
+    return { profile }
   }
 }
 
-module.exports = PeopleService;
+module.exports = PeopleService

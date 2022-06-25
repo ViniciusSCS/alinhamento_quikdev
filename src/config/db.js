@@ -1,5 +1,5 @@
-require("dotenv").config();
-const connection = process.env;
+require('dotenv').config()
+const connection = process.env
 
 module.exports = {
   username: connection.MYSQL_USER,
@@ -9,6 +9,6 @@ module.exports = {
   port: connection.MYSQL_PORT,
   dialect: connection.DB_DIALECT,
   define: {
-    timestamps: true,
-  },
-};
+    timestamps: true
+  }
+}

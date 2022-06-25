@@ -2,23 +2,23 @@ module.exports = async (req, res, next) => {
   let {
     page = 1,
     limit = 10,
-    sort = "createdAt",
-    order = "desc",
-    filter = {},
-  } = req.query;
+    sort = 'createdAt',
+    order = 'desc',
+    filter = {}
+  } = req.query
 
-  page = parseInt(page);
-  limit = parseInt(limit);
+  page = parseInt(page)
+  limit = parseInt(limit)
 
-  if (isNaN(page)) page = 1;
-  if (isNaN(limit)) limit = 10;
+  if (isNaN(page)) page = 1
+  if (isNaN(limit)) limit = 10
 
-  const skip = (page - 1) * limit;
+  const skip = (page - 1) * limit
 
-  if (order.toLowerCase() === "desc") {
-    order = -1;
+  if (order.toLowerCase() === 'desc') {
+    order = -1
   } else {
-    order = 1;
+    order = 1
   }
 
   req.pagination = {
@@ -27,8 +27,8 @@ module.exports = async (req, res, next) => {
     sort,
     order,
     skip,
-    filter,
-  };
+    filter
+  }
 
-  return next();
-};
+  return next()
+}
