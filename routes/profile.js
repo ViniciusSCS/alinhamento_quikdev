@@ -9,4 +9,4 @@ const controller = new ProfileController(models.profile);
 router.get("/", authMiddleware, controller.index.bind(controller));
 router.post("/", authMiddleware, controller.store.bind(controller));
 
-module.exports = router;
+module.exports = router

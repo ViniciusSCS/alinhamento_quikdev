@@ -1,8 +1,9 @@
-const express = require('express');
+const express = require('express')
 const router = express.Router()
-const authMiddleware = require('../src/app/middlewares/auth');
-const PeopleController = require('../src/app/controllers/PeopleController');
-const models = require('../src/app/models/');
+const authMiddleware = require('../src/app/middlewares/auth')
+const PeopleController = require('../src/app/controllers/PeopleController')
+
+const models = require('../src/app/models/')
 
 const controller = new PeopleController(models.people)
 
