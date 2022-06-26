@@ -22,8 +22,6 @@ const gerarTokenAccess = (body) => {
     { expiresIn: 300 }
   )
 
-  console.log(tokenAccess)
-
   return tokenAccess
 }
 

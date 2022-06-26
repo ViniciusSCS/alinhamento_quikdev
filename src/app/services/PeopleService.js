@@ -60,7 +60,7 @@ class PeopleService {
     return people
   }
 
-  async atualizar (id, people) {
+  async update (id, people) {
     const peopleExists = await this.peopleRepository.findOne({
       where: { id }
     })
@@ -72,8 +72,8 @@ class PeopleService {
     const passwordKey = await encrypt(people.password)
     people.password = passwordKey
 
-    await this.peopleRepository.findByIdAndUpdate(people, {
-      where: { id: people.id }
+    await this.peopleRepository.update(people, {
+      where: { id }
     })
 
     people = Object.assign({}, people.dataValues)

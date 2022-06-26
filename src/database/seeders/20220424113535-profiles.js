@@ -18,6 +18,18 @@ module.exports = {
           description: 'Admin',
           createdAt: new Date(),
           updatedAt: new Date()
+        },
+
+        {
+          description: 'Moderador',
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+
+        {
+          description: 'User',
+          createdAt: new Date(),
+          updatedAt: new Date()
         }
       ],
       {}

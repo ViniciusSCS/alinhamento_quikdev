@@ -11,7 +11,7 @@ class ProfileController {
   }
 
   async index (req, res) {
-    if (req.profileId === 1) {
+    if (req.profileId !== 3) {
       const body = await this.profileService.findAll()
 
       return res.status(200).json({ data: body })
@@ -26,7 +26,7 @@ class ProfileController {
   async store (req, res) {
     const { body, profileId } = req
 
-    if (profileId === 1) {
+    if (profileId !== 3) {
       try {
         const validateBody = await validarCadastro(body)
 
