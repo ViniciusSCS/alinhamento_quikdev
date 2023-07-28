@@ -84,7 +84,6 @@ class PeopleController {
   }
 
   async index (req, res) {
-    console.log(req.profileId)
     if (req.profileId !== 3) {
       const body = await this.peopleService.findAll()
 
@@ -104,8 +103,6 @@ class PeopleController {
       const validateBody = await validarCadastro(body)
 
       const payload = await this.peopleService.update(userId, validateBody)
-
-      console.log('PAYLOAD', payload)
 
       if (!payload) {
         return sendBadRequest(req, res, 'Não foi possível cadastrar')
